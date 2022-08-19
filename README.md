@@ -11,5 +11,5 @@ https://github.com/JakMcCarthy/Weather-App
 
 
 ## Study Group
-Jackson, Susan, Sarah, Chris P, Ricky, Karan, Ekow, Trent
+Jackson, Susan, Sarah, Chris P, Ricky, Aaron
 
