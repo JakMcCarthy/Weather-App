@@ -36,3 +36,57 @@ function fetchSecondCall(searchByCity, latNum, lonNum, currentDateTime, currentD
         populate5DayForecast(secondCallData);
     });
 };
+
+// Function to populate current day forecast
+function populateCurrentDayHtml(searchByCity, fullDayDaily, currentDayIcon, currTempF, currentHumidity, currentMPS, mphWindSpeed, uvIndex) {
+    var dailyForecastContainerEl = document.createElement("div");
+    dailyForecastContainerEl.setAttribute("id", "daily-forecast-container");
+    dailyForecastContainerEl.classList = "borderDiv";
+
+    var currentDayTitle = document.createElement("h3");
+    currentDayTitle.textContent = ( searchByCity.charAt(0).toUpperCase() + searchByCity.slice(1) + " " + fullDayDaily);
+
+    var currentIconEl = document.createElement("span")
+    var currentIconSymbol = "http://openweathermap.org/img/wn/" + currentDayIcon + "@2x.png";
+    currentIconEl.innerHTML = "<img src=" + currentIconSymbol + "></img>";
+    currentDayTitle.append(currentIconEl);
+
+    // today's weather - create elements to hold info
+    var currentTempEl = document.createElement("p");
+    var currentHumidityEl = document.createElement("p");
+    var currentWinSpEl = document.createElement("p");
+    var currentUvIEl = document.createElement("p");
+    currentUvIEl.classList.add("UV-el");
+
+    // add text
+    currentTempEl.textContent = "Temperature: " + (currTempF.toFixed(1)) + " °F";
+    currentHumidityEl.textContent = "Humidity: " + currentHumidity + "%";
+    currentWinSpEl.textContent = "Wind Speed: " + currentMPS + " MPH";
+    currentUvIEl.textContent = "UV Index: " + uvIndex;
+
+    // change uv color 
+    if (uvIndex < 3) {
+        currentUvIEl.classList.add("low");
+    }
+    else if ((uvIndex > 6) && (uvIndex < 9)) {
+        currentUvIEl.classList.add("high");
+    }
+    else if (uvIndex >= 9) {
+        currentUvIEl.classList.add("really-bad");
+    }
+    else {
+        currentUvIEl.classList.add("med");
+    }
+    
+    
+
+    $("#daily-forecast-container").remove();
+
+    // add to document
+    dailyWeatherContainerEl.appendChild(dailyForecastContainerEl);
+    dailyForecastContainerEl.appendChild(currentDayTitle);
+    dailyForecastContainerEl.appendChild(currentTempEl);
+    dailyForecastContainerEl.appendChild(currentHumidityEl);
+    dailyForecastContainerEl.appendChild(currentWinSpEl);
+    dailyForecastContainerEl.appendChild(currentUvIEl);
+};
