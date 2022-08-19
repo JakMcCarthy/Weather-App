@@ -148,3 +148,72 @@ function populate5DayForecast(secondCallData) {
         weeklyFlexContainerEL.appendChild(eachDayContainer);
     };
 };
+
+
+if (searchByCity == "") {
+    alert("Please do not leave city name blank");
+    searchByCityEl.value = "";
+    return 
+} else {  
+    searchByCityEl.value = "";
+};
+ 
+// Get array from local storage
+var citiesLocalStorage = JSON.parse(localStorage.getItem("savedCities"));
+
+var cityExist = 0;
+
+// Check if array is null and create new one again.
+if (citiesLocalStorage === null) {
+    citiesSearched =  new Array();
+
+} else { 
+    citiesSearched = citiesLocalStorage;
+};
+
+var openWeatherApiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + searchByCity + "&appid=32a27c42260b02de3ba5e1466def4861&units=imperial";
+
+fetch(  
+  openWeatherApiUrl
+).then(function (weatherResponse) {
+    
+    if(weatherResponse.ok) { 
+    return weatherResponse.json();
+    } else {
+        window.alert("Error: " + weatherResponse.statusText + "\nPlease re-enter a valid city");
+        searchByCityEl.value = "";
+        return;
+    }
+}).then(function (weatherLatLon) {
+    // Current day info
+    var latNum = weatherLatLon.coord.lat;
+    var lonNum = weatherLatLon.coord.lon;
+    var currentDateTime = weatherLatLon.dt
+    var currentDayIcon = weatherLatLon.weather[0].icon // Current day icon
+    var currTempF = weatherLatLon.main.temp // Temperature 
+    var currentHumidity = weatherLatLon.main.humidity // Humidity
+    var currentMPS = weatherLatLon.wind.speed // W.S.
+    var mphWindSpeed = Math.round(currentMPS * 2.237) // MPH
+
+    // Validate if city is new.
+    for (i=0; i < citiesSearched.length; i++) {
+        if (searchByCity.toLowerCase() === citiesSearched[i].toLowerCase()) {
+            cityExist =1
+            break;
+        };
+    };
+
+    if (cityExist === 0) {
+        citiesSearched.push(searchByCity.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.substring(1)).join(' '));
+        
+        // Save to local storage
+        localStorage.setItem("savedCities", JSON.stringify(citiesSearched));
+    }
+
+    fetchSecondCall(searchByCity.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.substring(1)).join(' '), latNum, lonNum, currentDateTime, currentDayIcon, currTempF, currentHumidity, currentMPS, mphWindSpeed);
+
+  }).catch(function(error) { 
+    return;
+  });
+
+};
