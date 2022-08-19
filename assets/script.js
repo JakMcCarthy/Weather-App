@@ -91,7 +91,17 @@ function populateCurrentDayHtml(searchByCity, fullDayDaily, currentDayIcon, curr
     dailyForecastContainerEl.appendChild(currentUvIEl);
 };
 
-  
+function getWeatherData(event , cityClicked) {
+
+    event.preventDefault() 
+
+    if (cityClicked) {
+        var searchByCity = cityClicked.trim();
+
+    } else { 
+        var searchByCity = searchByCityEl.value.trim();
+    };
+   
 function populate5DayForecast(secondCallData) {
     
     $("#weekly-forecast-container").remove();
