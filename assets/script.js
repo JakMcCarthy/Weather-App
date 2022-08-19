@@ -217,3 +217,6 @@ fetch(
   });
 
 };
+
+
+seachEventHandlerEl.addEventListener("submit",getWeatherData);
