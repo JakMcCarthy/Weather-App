@@ -90,3 +90,61 @@ function populateCurrentDayHtml(searchByCity, fullDayDaily, currentDayIcon, curr
     dailyForecastContainerEl.appendChild(currentWinSpEl);
     dailyForecastContainerEl.appendChild(currentUvIEl);
 };
+
+  
+function populate5DayForecast(secondCallData) {
+    
+    $("#weekly-forecast-container").remove();
+
+    var weeklyForecastContainerEl = document.createElement("div");
+    weeklyForecastContainerEl.setAttribute("id", "weekly-forecast-container");
+    weeklyForecastContainerEl.classList = "border-Div-right-column"; 
+    var fiveDayForecast = document.createElement("h3");
+    fiveDayForecast.textContent = "5-Day Forecast:"
+    dailyWeatherContainerEl.appendChild(weeklyForecastContainerEl);
+    weeklyForecastContainerEl.appendChild(fiveDayForecast);
+    var weeklyFlexContainerEL = document.createElement("div");
+    weeklyFlexContainerEL.classList = "weekly-flex-conatiner"
+    weeklyForecastContainerEl.appendChild(weeklyFlexContainerEL);
+
+    for (i=1; i <= 5; i++) {
+        var unixTime = secondCallData.daily[i].dt;
+    
+        var unix_timestamp = unixTime;
+        var date = new Date(unix_timestamp * 1000);
+    
+        var fullDay = (date.getMonth() + 1) + "/" + date.getDate() + "/"  + date.getFullYear(); // Date
+        var iconWeather = secondCallData.daily[i].weather[0].icon // icon
+        var fahrenheitTemp = secondCallData.daily[i].temp.day // Temperature
+        var humidity = secondCallData.daily[i].humidity;
+
+        var eachDayContainer = document.createElement("div");
+        eachDayContainer.setAttribute("id", ("day=" + [i]));
+        eachDayContainer.classList = "border-div-five-day-forecast";
+       
+        var currentDayTitle = document.createElement("p");
+        currentDayTitle.textContent = (fullDay);
+
+        var iconSpan = document.createElement("p");
+        iconSpan.textContent = "";
+
+        var currentIconEl = document.createElement("span")
+        var currentIconSymbol = "http://openweathermap.org/img/wn/" + iconWeather + "@2x.png";
+        currentIconEl.innerHTML = "<img src=" + currentIconSymbol + "></img>";
+        iconSpan.append(currentIconEl)
+
+        // p elements for day info
+        var currentTempEl = document.createElement("p");
+        var currentHumidityEl = document.createElement("p");
+        
+        currentTempEl.textContent = "Temperature: " +  (fahrenheitTemp.toFixed(2)) + " °F";
+        currentHumidityEl.textContent = "Humidity: " + humidity + "%";
+          
+        // Append daily forecast
+        eachDayContainer.appendChild(currentDayTitle);
+        eachDayContainer.appendChild(currentIconEl);
+        eachDayContainer.appendChild(currentTempEl);
+        eachDayContainer.appendChild(currentHumidityEl);
+        weeklyFlexContainerEL.appendChild(eachDayContainer);
+    };
+};
