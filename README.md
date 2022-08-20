@@ -30,7 +30,7 @@ THEN I am again presented with current and future conditions for that city
 https://jakmccarthy.github.io/Weather-App/
 
 ## Image
-![] img src = "./assets/images/Screenshot (117).png"
+![ ] img src = "./assets/images/Screenshot (117).png"
 
 
 ## Study Group
