@@ -2,11 +2,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-image: radial-gradient(
-        rgb(241, 173, 63),
-        rgb(161, 241, 104),
-        lightseagreen
-    );
+    background-color:  rgb(24, 228, 221) ;
+    
 }
 
 .currentUVI {
@@ -16,12 +13,8 @@
 }
 
 h1 {
-    background-image: radial-gradient(
-        rgb(241, 173, 63),
-        rgb(161, 241, 104),
-        lightseagreen
-    );
-    color: rgb(13, 64, 195);
+    background-color:  rgb(24, 228, 221);
+    color: rgb(5, 7, 14);
     font-size: 40px;
     font-weight: bold;
     padding: 20px;
@@ -32,7 +25,7 @@ h1 {
 }
 
 body {
-    background-color: rgb(246, 157, 49);
+    background-color: rgb(59, 100, 249);
 }
 
 h2 {
